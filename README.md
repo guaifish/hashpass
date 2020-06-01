@@ -12,3 +12,10 @@
 ## 使用
 
 输入域名和密码长度, 点击开始, 程序会自动复制结果到剪贴板, 直接 `CTRL + V` 即可
+
+## 打包程序
+
+```bash
+pip install -r requirements.txt
+pyinstaller -Fw main.py
+```
