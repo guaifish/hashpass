@@ -11,6 +11,8 @@ class NotSetSaltError(Exception):
 
 
 def generate_password(domain, salt, length=16):
+    if not salt:
+        raise NotSetSaltError("请在环境变量设置HASHPASS_SALT")
     raw_password = domain + salt
     raw_password = raw_password.encode('utf8')
     s = hashlib.sha256(raw_password).digest()
@@ -27,8 +29,6 @@ def main():
     parser.add_argument('domain', metavar='域名')
     parser.add_argument('length', default=16, type=int, metavar='密码长度')
     salt = os.environ.get('HASHPASS_SALT')
-    if not salt:
-        raise NotSetSaltError("请在环境变量设置HASHPASS_SALT")
     args = parser.parse_args()
     hash_password = generate_password(args.domain, salt, args.length)
     pyperclip.copy(hash_password)
